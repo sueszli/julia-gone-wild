@@ -10,6 +10,7 @@ headings=normal,
 \usepackage{listings}
 \usepackage{booktabs}
 \usepackage{array}
+\usepackage{pgfgantt}
 
 
 %% ==================== ADAPT ACCORDINGLY ==================== %%
@@ -85,8 +86,6 @@ movl  %eax, -4(%rbp)   # store eax back into var
 
 \section{Exercise 2}
 
-\subsection{Optimal Schedule}
-
 \begin{table}[htbp]
     \centering
     \caption{Duration of independent tasks we want to schedule optimally.}
@@ -99,6 +98,19 @@ movl  %eax, -4(%rbp)   # store eax back into var
     \end{tabular}
 \end{table}
 
+\subsection{Optimal Schedule}
+
+Assuming the given tasks can be executed independently and the goal is to minimize the total execution time, with 4 workers available, the optimal schedule can be calculated as follows:
+
+\begin{ganttchart}[ vgrid={*{11}{gray, dotted}, *1{black, dashed}}, bar label node/.append style={align=left, text width=width("Aim 2. Software verificationx")}]{1}{24}
+    \gantttitle{Year 1}{12} \gantttitle{Year 2}{12} \\
+    
+    \ganttbar{Aim 1. Migration}{1}{8} \\
+    \ganttbar{Aim 2. Software verification}{6}{12} \\
+    \ganttbar{Aim 3. Hardware portability}{12}{18} \\
+    \ganttbar{Aim 4. Documentation}{8}{24} \\
+\end{ganttchart}
+ 
 
 \subsection{Schedule \texttt{static,3}}
 
