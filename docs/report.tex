@@ -1,13 +1,16 @@
 \documentclass[a4paper,%
-11pt,%
-DIV12,
-headsepline,%
+8pt, % font size
+DIV99, % 1.00 text width
+headsepline, % line under header
 headings=normal,
 ]{scrartcl}
 
 \usepackage{./docs/bopc}
 \usepackage{csvsimple}
-% % \usepackage{listings}
+\usepackage{listings}
+\usepackage{booktabs}
+\usepackage{array}
+
 
 %% ==================== ADAPT ACCORDINGLY ==================== %%
 
@@ -38,8 +41,83 @@ headings=normal,
 
 \subsection{What do \texttt{a} and \texttt{t} count?}
 
+The variable \texttt{a} stores the selected thread number for each parallel iteration, while \texttt{t} stores a non-atomic counter that all threads with the same ID increment. Unless no two threads are assigned the same iteration, the final value of \texttt{t} will be non-deterministic as each \texttt{var++} operation is in fact a read-modify-write operation:
+
+\begin{lstlisting}
+movl  -4(%rbp), %eax   # load var into eax
+addl  $1, %eax         # increment eax by 1
+movl  %eax, -4(%rbp)   # store eax back into var
+\end{lstlisting}
+
 \subsection{Values for all elements in \texttt{a} and \texttt{t}}
 
+\begin{table}[htbp]
+    \centering
+    \caption{Values of array \texttt{a} for different scheduling strategies}
+    \begin{tabular}{l*{17}{c}}
+        \toprule
+        case / \texttt{a} & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16 \\
+        \midrule
+        \texttt{static, 0} & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 1 & 1 & 1 & 2 & 2 & 2 & 2 & 2 \\
+        \texttt{static, 1} & 0 & 1 & 2 & 0 & 1 & 2 & 0 & 1 & 2 & 0 & 1 & 2 & 0 & 1 & 2 & 0 & 1 \\
+        \texttt{dynamic, 1} & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+        \texttt{dynamic, 2} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        \texttt{guided, 5} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+    \centering
+    \caption{Values of array \texttt{t} for different scheduling strategies}
+    \begin{tabular}{lccc}
+        \toprule
+        case / \texttt{t} & 0 & 1 & 2 \\
+        \midrule
+        \texttt{static, 0} & 74307862 & 7 & 1806905557 \\
+        \texttt{static, 1} & 8591638 & 7 & 1872621781 \\
+        \texttt{dynamic, 1} & 6150416 & 18 & 1875062992 \\
+        \texttt{dynamic, 2} & 40737057 & 1 & 1840476368 \\
+        \texttt{guided, 5} & 51370273 & 1 & 1829843168 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+% \begin{table}[htbp]
+% \centering
+% \caption{Values of array a for different scheduling strategies}
+% \begin{tabular}{l*{17}{c}}
+%     \toprule
+%     case / a & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16 \\
+%     \midrule
+%     static & & & & & & & & & & & & & & & & & \\
+%     static,1 & & & & & & & & & & & & & & & & & \\
+%     static,2 & & & & & & & & & & & & & & & & & \\
+%     dynamic,1 & & & & & & & & & & & & & & & & & \\
+%     dynamic,2 & & & & & & & & & & & & & & & & & \\
+%     guided,5 & & & & & & & & & & & & & & & & & \\
+%     \bottomrule
+% \end{tabular}
+% \end{table}
+
+% \begin{table}[htbp]
+% \centering
+% \caption{Values of array t for different scheduling strategies}
+% \begin{tabular}{lcc}
+%     \toprule
+%     case / t & 0 & 1 & 2 \\
+%     \midrule
+%     static & & & \\
+%     static,1 & & & \\
+%     static,2 & & & \\
+%     dynamic,1 & & & \\
+%     dynamic,2 & & & \\
+%     guided,5 & & & \\
+%     \bottomrule
+% \end{tabular}
+% \end{table}
+
+    
 \section{Exercise 2}
 
 \subsection{Optimal Schedule}
