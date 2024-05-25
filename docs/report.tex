@@ -105,7 +105,38 @@ See Tables \ref{tab:values_a} and \ref{tab:values_t} for the values of \texttt{a
 
 \subsection{Optimal Schedule}
 
-Assuming the given tasks can be executed independently and the goal is to minimize the total execution time, with 4 workers available, the optimal schedule can be calculated as follows:
+Assuming the given tasks can be executed independently and the goal is to minimize the total execution time, with 4 workers available, the optimal schedule can be determined through the "Longest Processing Time" (LPT) rule. The LPT rule schedules tasks in decreasing order of processing time, which is optimal for minimizing the total completion time. This is often a good heuristic for this type of problem and tends to provide good results.
+
+First, we sort the tasks by duration in descending order, then we assign the first $n$ tasks to the $n$ workers in a round-robin fashion.
+
+% \begin{table}[htbp]
+%     \centering
+%     \caption{Optimal schedule for the given tasks.}
+%     \label{tab:optimal_schedule}
+%     \begin{tabular}{l*{4}{c}}
+%         \toprule
+%         Worker ID & Task ID & Task duration & Time taken \\
+%         \midrule
+%         0 & 15 & 4 & 4 \\
+%         1 & 16 & 3 & 3 \\
+%         2 & 14 & 2 & 2 \\
+%         3 & 13 & 2 & 2 \\
+%         0 & 12 & 2 & 6 \\
+%         1 & 11 & 1 & 4 \\
+%         2 & 10 & 1 & 3 \\
+%         3 & 9 & 1 & 3 \\
+%         0 & 8 & 1 & 7 \\
+%         1 & 7 & 1 & 5 \\
+%         2 & 6 & 1 & 4 \\
+%         3 & 5 & 2 & 5 \\
+%         0 & 4 & 1 & 8 \\
+%         1 & 3 & 2 & 7 \\
+%         2 & 2 & 1 & 5 \\
+%         3 & 1 & 2 & 9 \\
+%         0 & 0 & 1 & 9 \\
+%         \bottomrule
+%     \end{tabular}
+% \end{table}
 
 % gantt chart (make in excalidraw, just import img)
 
