@@ -102,7 +102,9 @@ movl  %eax, -4(%rbp)   # store eax back into var
 
 Assuming the given tasks can be executed independently and the goal is to minimize the total execution time, with 4 workers available, the optimal schedule can be calculated as follows:
 
-% gantt chart
+% gantt chart of optimal schedule
+\ganttset{group/.append style={orange}, milestone/.append style={red}, progress label text={}}
+
 
 \subsection{Schedule \texttt{static,3}}
 
