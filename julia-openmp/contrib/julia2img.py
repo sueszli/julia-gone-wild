@@ -7,7 +7,6 @@ import argparse
 import time
 
 
-
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
@@ -31,10 +30,9 @@ if __name__ == "__main__":
     image = image.reshape(im_height, im_height)
 
     my_dpi = 300
-    plt.figure(figsize=(im_height/my_dpi, im_height/my_dpi), dpi=my_dpi)
-    fig, ax = plt.subplots()    
-    #ax.imshow(image, interpolation='nearest', cmap=cm.hot)
-    ax.imshow(image, interpolation='nearest', cmap=cm.get_cmap('autumn_r'))
-    plt.axis('off')
-    plt.savefig(args.o, bbox_inches='tight', dpi=my_dpi)
-    
+    plt.figure(figsize=(im_height / my_dpi, im_height / my_dpi), dpi=my_dpi)
+    fig, ax = plt.subplots()
+    # ax.imshow(image, interpolation='nearest', cmap=cm.hot)
+    ax.imshow(image, interpolation="nearest", cmap=cm.get_cmap("autumn_r"))
+    plt.axis("off")
+    plt.savefig(args.o, bbox_inches="tight", dpi=my_dpi)
