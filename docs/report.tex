@@ -8,6 +8,9 @@ headings=normal,
 \usepackage{./docs/bopc}
 \usepackage{csvsimple}
 
+\documentclass{article}
+\usepackage{listings}
+
 %% ==================== ADAPT ACCORDINGLY ==================== %%
 
 % args: first name, last name, matriculation number
@@ -32,6 +35,22 @@ headings=normal,
 %% ========================= REPORT ========================== %%
 
 \section{Exercise 1}
+
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include <omp.h>
+#include <stdlib.h>
+
+int main(int argc, char *argv[]) {
+    int n_threads = omp_get_num_procs();
+    n_threads = 4;
+
+    #pragma omp parallel num_threads(n_threads)
+    {
+        printf("child id: %d\n", omp_get_thread_num());
+    }
+}
+\end{lstlisting}
 
 \subsection{What do \texttt{a} and \texttt{t} count?}
 

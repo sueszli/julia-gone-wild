@@ -2,7 +2,6 @@
 #include <omp.h>
 #include <stdlib.h>
 
-
 int main(int argc, char *argv[]) {
     int n_threads = omp_get_num_procs();
     n_threads = 4;
