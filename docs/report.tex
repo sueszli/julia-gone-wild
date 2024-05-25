@@ -5,11 +5,14 @@ headsepline,%
 headings=normal,
 ]{scrartcl}
 
+\usepackage{minted}
 \usepackage{./docs/bopc}
 \usepackage{csvsimple}
+% % \usepackage{listings}
+% \thispagestyle{empty}
+% \usemintedstyle{monokai}
 
-\documentclass{article}
-\usepackage{listings}
+
 
 %% ==================== ADAPT ACCORDINGLY ==================== %%
 
@@ -36,21 +39,66 @@ headings=normal,
 
 \section{Exercise 1}
 
-\begin{lstlisting}[language=C]
-#include <stdio.h>
-#include <omp.h>
-#include <stdlib.h>
+% \lstinputlisting{./demo/test.c}
+% \begin{lstlisting}[language=c]
+% #include <stdio.h>
+% #include <omp.h>
+% #include <stdlib.h>
 
-int main(int argc, char *argv[]) {
-    int n_threads = omp_get_num_procs();
-    n_threads = 4;
+% int main(int argc, char *argv[]) {
+%     int n_threads = omp_get_num_procs();
+%     n_threads = 4;
 
-    #pragma omp parallel num_threads(n_threads)
-    {
-        printf("child id: %d\n", omp_get_thread_num());
-    }
-}
-\end{lstlisting}
+%     #pragma omp parallel num_threads(n_threads)
+%     {
+%         printf("child id: %d\n", omp_get_thread_num());
+%     }
+% }
+% \end{lstlisting}
+
+% \inputminted[breaklines]{C}{./demo/test.c}
+
+
+% \begin{listing}[!ht]
+% \inputminted{octave}{BitXorMatrix.m}
+% \caption{Example from external file}
+% \label{listing:1}
+% \end{listing}
+
+% \begin{listing}[!ht]
+% \begin{minted}{c}
+% #include <stdio.h>
+% int main() {
+%    printf("Hello, World!"); /*printf() outputs the quoted string*/
+%    return 0;
+% }
+% \end{minted}
+% \caption{Hello World in C}
+% \label{listing:2}
+% \end{listing}
+
+% \begin{listing}[!ht]
+% \begin{minted}{lua}
+% function fact (n)--defines a factorial function
+%   if n == 0 then
+%     return 1
+%   else
+%     return n * fact(n-1)
+%   end
+% end
+
+% print("enter a number:")
+% a = io.read("*number") -- read a number
+% print(fact(a))
+% \end{minted}
+% \caption{Example from the Lua manual}
+% \label{listing:3}
+% \end{listing}
+% \noindent\texttt{minted} makes a nice job of typesetting listings \ref{listing:1}, \ref{listing:2} and \ref{listing:3}.
+% \renewcommand\listoflistingscaption{List of source codes}
+% \listoflistings
+% \end{document}
+    
 
 \subsection{What do \texttt{a} and \texttt{t} count?}
 
