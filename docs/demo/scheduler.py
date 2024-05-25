@@ -1,25 +1,40 @@
-def schedule_tasks(task_durations):
-    sorted_tasks = sorted(enumerate(task_durations), key=lambda x: x[1])
+from itertools import groupby
+from operator import itemgetter
 
-    worker_availability = [0] * 4
+
+def schedule_tasks(task_durations):
+    sorted_tasks = sorted(enumerate(task_durations), key=lambda x: x[1], reverse=True)  # fst: task_id, snd: duration
+
+    worker_utilization = [0] * 4  # time spent on work by each worker so far
 
     scheduled_tasks = []
     for task_id, duration in sorted_tasks:
-        # find the worker who becomes available the soonest
-        min_time = min(worker_availability)
-        worker_index = worker_availability.index(min_time)
+        # get least utilized worker
+        min_time = min(worker_utilization)
+        worker_index = worker_utilization.index(min_time)
 
-        # update worker availability
-        worker_availability[worker_index] += duration
+        # assign task
+        worker_utilization[worker_index] += duration
 
-        # Record the assignment
-        scheduled_tasks.append((worker_index, task_id, min_time, min_time + duration))
+        # keep track of assigned task
+        start_time = min_time
+        end_time = start_time + duration
+        scheduled_tasks.append((worker_index, task_id, start_time, end_time))
 
     return scheduled_tasks
 
 
 task_durations = [1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 4, 3, 3]
+print(f"sorted tasks: {sorted(task_durations, reverse=True)}\n")
 scheduled_tasks = schedule_tasks(task_durations)
 
-for worker, task_id, start_time, end_time in scheduled_tasks:
-    print(f"Worker {worker}: Task {task_id}, Start: {start_time}, End: {end_time}")
+# group tasks by worker
+scheduled_tasks.sort(key=itemgetter(0))
+for worker, tasks in groupby(scheduled_tasks, key=itemgetter(0)):
+    print(f"worker {worker}:")
+    for task in tasks:
+        print(f"\ttask {task[1]}, start: {task[2]}, end: {task[3]} (duration: {task[3] - task[2]})")
+    print()
+
+# effective time
+print(f"time spent: {max(map(itemgetter(3), scheduled_tasks))}")
