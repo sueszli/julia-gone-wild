@@ -52,9 +52,12 @@ movl  %eax, -4(%rbp)   # store eax back into var
 
 \subsection{Values for all elements in \texttt{a} and \texttt{t}}
 
+See Tables \ref{tab:values_a} and \ref{tab:values_t} for the values of \texttt{a} and \texttt{t} for different scheduling strategies.
+
 \begin{table}[htbp]
     \centering
     \caption{Values of array \texttt{a} for different scheduling strategies}
+    \label{tab:values_a}
     \begin{tabular}{l*{17}{c}}
         \toprule
         case / \texttt{a} & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16 \\
@@ -71,6 +74,7 @@ movl  %eax, -4(%rbp)   # store eax back into var
 \begin{table}[htbp]
     \centering
     \caption{Values of array \texttt{t} for different scheduling strategies - keep in mind that these values are not reproducible / deterministic.}
+    \label{tab:values_t}
     \begin{tabular}{l*{3}{c}}
         \toprule
         case / \texttt{t} & 0 & 1 & 2 \\
@@ -89,6 +93,7 @@ movl  %eax, -4(%rbp)   # store eax back into var
 \begin{table}[htbp]
     \centering
     \caption{Duration of independent tasks we want to schedule optimally.}
+    \label{tab:task_duration}
     \begin{tabular}{l*{17}{c}}
         \toprule
         Task ID & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16 \\
@@ -102,9 +107,7 @@ movl  %eax, -4(%rbp)   # store eax back into var
 
 Assuming the given tasks can be executed independently and the goal is to minimize the total execution time, with 4 workers available, the optimal schedule can be calculated as follows:
 
-% gantt chart of optimal schedule
-\ganttset{group/.append style={orange}, milestone/.append style={red}, progress label text={}}
-
+% gantt chart (make in excalidraw, just import img)
 
 \subsection{Schedule \texttt{static,3}}
 
