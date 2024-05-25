@@ -1,5 +1,3 @@
-
-
 CPP=g++
 CPPFLAGS=-fopenmp
 

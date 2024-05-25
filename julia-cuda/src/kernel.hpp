@@ -1,4 +1,3 @@
-
 #ifndef JULIA_KERNEL
 #define JULIA_KERNEL
 
