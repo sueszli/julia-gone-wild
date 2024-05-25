@@ -12,7 +12,7 @@ headings=normal,
 %% ==================== ADAPT ACCORDINGLY ==================== %%
 
 % args: first name, last name, matriculation number
-\setAuthorOne{Pia}{Schwarzinger}{???}
+\setAuthorOne{Pia}{Schwarzinger}{12017370}
 \setAuthorTwo{Yahya}{Jabary}{11912007}
 
 % set group size and group number, group size influences author formatting
@@ -34,22 +34,7 @@ headings=normal,
 
 \section{Exercise 1}
 
-% \lstinputlisting{./demo/test.c}
-\begin{lstlisting}[language=c]
-#include <stdio.h>
-#include <omp.h>
-#include <stdlib.h>
-
-int main(int argc, char *argv[]) {
-    int n_threads = omp_get_num_procs();
-    n_threads = 4;
-
-    #pragma omp parallel num_threads(n_threads)
-    {
-        printf("child id: %d\n", omp_get_thread_num());
-    }
-}
-\end{lstlisting}
+\lstinputlisting{./demo/scheduler.c}
 
 \subsection{What do \texttt{a} and \texttt{t} count?}
 

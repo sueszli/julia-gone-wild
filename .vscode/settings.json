@@ -16,5 +16,12 @@
         "editor.tabSize": 4,
         "editor.indentSize": 4,
         "editor.insertSpaces": true
+    },
+    "files.associations": {
+        "*.Rmd": "rmd",
+        "*rmd": "rmd",
+        "*.rmd": "markdown",
+        "stdlib.h": "c",
+        "stdio.h": "c"
     }
 }
