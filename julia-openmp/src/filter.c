@@ -10,19 +10,23 @@ const int fheight2 = 1;
 
 
 void apply_filter(png_bytep *row_pointers, png_bytep *buf, int width, int height, double filter[3][3], int rounds) {
+    int block_size = 16;
     for(int r=0; r<rounds; r++) {
         #pragma omp parallel
         {
             #pragma omp single
             {
-                for(int i=fwidth2; i<width - fwidth2; i++) {
-                    for(int j=fheight2; j<height - fheight2; j++) {
+                for(int i=fwidth2; i<width - fwidth2; i += block_size) {
+                    for(int j=fheight2; j<height - fheight2; j += block_size) {
                         #pragma omp task firstprivate(i, j)
                         {
-                            filter_on_pixel(row_pointers, buf, i, j, filter);
+                            for(int bi = i; bi < i + block_size && bi < width - fwidth2; bi++) {
+                                for(int bj = j; bj < j + block_size && bj < height - fheight2; bj++) {
+                                    filter_on_pixel(row_pointers, buf, bi, bj, filter);
+                                }
+                            }
                         }
                     }
-                }
              }
         }
 
