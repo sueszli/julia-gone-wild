@@ -70,7 +70,7 @@ movl  %eax, -4(%rbp)   # store eax back into var
 \begin{table}[htbp]
     \centering
     \caption{Values of array \texttt{t} for different scheduling strategies - keep in mind that these values are not reproducible / deterministic.}
-    \begin{tabular}{lccc}
+    \begin{tabular}{l*{3}{c}}
         \toprule
         case / \texttt{t} & 0 & 1 & 2 \\
         \midrule
@@ -86,6 +86,19 @@ movl  %eax, -4(%rbp)   # store eax back into var
 \section{Exercise 2}
 
 \subsection{Optimal Schedule}
+
+\begin{table}[htbp]
+    \centering
+    \caption{Duration of independent tasks we want to schedule optimally.}
+    \begin{tabular}{l*{17}{c}}
+        \toprule
+        Task ID & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16 \\
+        \midrule
+        Task duration & 1 & 2 & 1 & 2 & 1 & 2 & 1 & 2 & 1 & 2 & 1 & 2 & 1 & 2 & 4 & 3 & 3 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
 
 \subsection{Schedule \texttt{static,3}}
 
