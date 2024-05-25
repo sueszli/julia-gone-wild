@@ -1,4 +1,3 @@
-
 #ifndef JULIAF_H_
 #define JULIAF_H_
 

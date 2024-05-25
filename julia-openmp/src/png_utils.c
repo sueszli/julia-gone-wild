@@ -1,4 +1,3 @@
-
 #include <stdlib.h>
 #include "png_utils.h"
 

@@ -1,3 +1,5 @@
+<!-- julia gone openmp -->
+
 _compiling latex_:
 
 ```bash
@@ -8,6 +10,6 @@ pdflatex -interaction=nonstopmode -output-directory=./docs ./docs/bopc_report.te
 
 _working on the hydra cluster_:
 
-- delete `CMakeCache.txt`
-- create the binary on the host platform
-- give `./bin` exec permissions
+-   create the binary on the host platform - unless you're sure to have the same architecture as the cluster
+-   delete `CMakeCache.txt`
+-   give `./bin` exec permissions

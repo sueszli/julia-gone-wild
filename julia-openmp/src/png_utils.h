@@ -1,5 +1,3 @@
-
-
 /*
  * (C) 2021 Sascha Hunold
  * I based these functions on the libpng example, see below.

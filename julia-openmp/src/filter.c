@@ -32,4 +32,3 @@ void apply_filter(png_bytep *row_pointers, png_bytep *buf, int width, int height
 	    row_pointers = tmp;
     }
 }
-
