@@ -69,7 +69,7 @@ movl  %eax, -4(%rbp)   # store eax back into var
 
 \begin{table}[htbp]
     \centering
-    \caption{Values of array \texttt{t} for different scheduling strategies}
+    \caption{Values of array \texttt{t} for different scheduling strategies - keep in mind that these values are not reproducible / deterministic.}
     \begin{tabular}{lccc}
         \toprule
         case / \texttt{t} & 0 & 1 & 2 \\
@@ -83,41 +83,6 @@ movl  %eax, -4(%rbp)   # store eax back into var
     \end{tabular}
 \end{table}
 
-% \begin{table}[htbp]
-% \centering
-% \caption{Values of array a for different scheduling strategies}
-% \begin{tabular}{l*{17}{c}}
-%     \toprule
-%     case / a & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16 \\
-%     \midrule
-%     static & & & & & & & & & & & & & & & & & \\
-%     static,1 & & & & & & & & & & & & & & & & & \\
-%     static,2 & & & & & & & & & & & & & & & & & \\
-%     dynamic,1 & & & & & & & & & & & & & & & & & \\
-%     dynamic,2 & & & & & & & & & & & & & & & & & \\
-%     guided,5 & & & & & & & & & & & & & & & & & \\
-%     \bottomrule
-% \end{tabular}
-% \end{table}
-
-% \begin{table}[htbp]
-% \centering
-% \caption{Values of array t for different scheduling strategies}
-% \begin{tabular}{lcc}
-%     \toprule
-%     case / t & 0 & 1 & 2 \\
-%     \midrule
-%     static & & & \\
-%     static,1 & & & \\
-%     static,2 & & & \\
-%     dynamic,1 & & & \\
-%     dynamic,2 & & & \\
-%     guided,5 & & & \\
-%     \bottomrule
-% \end{tabular}
-% \end{table}
-
-    
 \section{Exercise 2}
 
 \subsection{Optimal Schedule}
