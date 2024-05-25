@@ -1,5 +1,3 @@
-<!-- julia gone openmp -->
-
 _compiling latex_:
 
 ```bash
