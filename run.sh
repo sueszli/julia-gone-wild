@@ -2,8 +2,7 @@
 docker-compose up
 
 docker ps --all
-docker exec -it example-project /bin/bash
-open http://localhost:8888/lab
+docker exec -it julia /bin/bash
 
 # ----------------------------------------------------------------------------- stop
 docker-compose down
