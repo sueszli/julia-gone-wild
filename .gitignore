@@ -38,7 +38,7 @@
 ### CUDA ###
 *.i
 *.ii
-*.gpu
+# *.gpu
 *.ptx
 *.cubin
 *.fatbin
