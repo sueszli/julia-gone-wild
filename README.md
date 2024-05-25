@@ -10,4 +10,4 @@ _working on the hydra cluster_:
 
 - delete `CMakeCache.txt`
 - create the binary on the host platform
-- give ./bin exec permissions
+- give `./bin` exec permissions
