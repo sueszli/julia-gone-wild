@@ -18,7 +18,6 @@ static double gauss_filter[3][3] = {
 };
 
 void filter_on_pixel(png_bytep *row_pointers, png_bytep *buf, int x, int y, double filter[3][3]) {
-
     double r = 0;
     double g = 0;
     double b = 0;
@@ -34,7 +33,6 @@ void filter_on_pixel(png_bytep *row_pointers, png_bytep *buf, int x, int y, doub
 
     png_bytep px = &(buf[x][y * 4]);
 
-    
     px[0] = min(255, r);
     px[1] = min(255, g);
     px[2] = min(255, b);

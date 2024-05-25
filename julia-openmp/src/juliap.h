@@ -1,4 +1,3 @@
-
 #ifndef JULIAP_H_
 #define JULIAP_H_
 

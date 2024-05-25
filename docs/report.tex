@@ -7,6 +7,7 @@ headings=normal,
 
 \usepackage{./docs/bopc}
 \usepackage{csvsimple}
+% % \usepackage{listings}
 
 %% ==================== ADAPT ACCORDINGLY ==================== %%
 
@@ -32,6 +33,23 @@ headings=normal,
 %% ========================= REPORT ========================== %%
 
 \section{Exercise 1}
+
+% \lstinputlisting{./demo/test.c}
+\begin{lstlisting}[language=c]
+#include <stdio.h>
+#include <omp.h>
+#include <stdlib.h>
+
+int main(int argc, char *argv[]) {
+    int n_threads = omp_get_num_procs();
+    n_threads = 4;
+
+    #pragma omp parallel num_threads(n_threads)
+    {
+        printf("child id: %d\n", omp_get_thread_num());
+    }
+}
+\end{lstlisting}
 
 \subsection{What do \texttt{a} and \texttt{t} count?}
 
@@ -81,5 +99,32 @@ headings=normal,
 
 \subsection{Running time: CPU vs GPU code}
 
+\newpage
+
+\section{Addendum: Raw Data}
+
+\begin{figure}[htbp]
+    \centering
+    \csvautotabular{./output/filter_strong.csv}\label{tab:filter_strong}
+    \caption{Raw output from "filter strong" job.}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \csvautotabular{./output/filter_weak.csv}\label{tab:filter_weak}
+    \caption{Raw output from "weak scaling" job. Timed out on \textit{slurmstepd} due to time out / time limit.}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \csvautotabular{./output/juliap.csv}\label{tab:juliap}
+    \caption{Raw output from "juliap" job.}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \csvautotabular{./output/juliap2.csv}\label{tab:juliap2}
+    \caption{Raw output from "juliap2" job.}
+\end{figure}
 
 \end{document}
