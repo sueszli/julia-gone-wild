@@ -19,7 +19,7 @@ brew install llvm libomp cmake gcc
 gcc --version # ignore this version, v15 didn't work for me
 brew list --versions gcc # this is the right one
 
-gcc-14 -fopenmp -o ./demo/test ./demo/test.c && ./demo/test && rm -rf ./demo/test
+gcc-14 -fopenmp -o ./docs/demo/test ./docs/demo/test.c && ./docs/demo/test && rm -rf ./docs/demo/test
 ```
 
 _executing SLURM jobs on the TU Wien hydra cluster_:
