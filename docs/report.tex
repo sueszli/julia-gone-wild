@@ -103,12 +103,12 @@ movl  %eax, -4(%rbp)   # store eax back into var
 Assuming the given tasks can be executed independently and the goal is to minimize the total execution time, with 4 workers available, the optimal schedule can be calculated as follows:
 
 \begin{ganttchart}[ vgrid={*{11}{gray, dotted}, *1{black, dashed}}, bar label node/.append style={align=left, text width=width("Aim 2. Software verificationx")}]{1}{24}
-    \gantttitle{Year 1}{12} \gantttitle{Year 2}{12} \\
+    \gantttitle{Time}{24}\\
     
-    \ganttbar{Aim 1. Migration}{1}{8} \\
-    \ganttbar{Aim 2. Software verification}{6}{12} \\
-    \ganttbar{Aim 3. Hardware portability}{12}{18} \\
-    \ganttbar{Aim 4. Documentation}{8}{24} \\
+    \ganttbar{Worker 0}{1}{8} \\
+    \ganttbar{Worker 1}{6}{12} \\
+    \ganttbar{Worker 2}{12}{18} \\
+    \ganttbar{Worker 3}{8}{24} \\
 \end{ganttchart}
  
 
