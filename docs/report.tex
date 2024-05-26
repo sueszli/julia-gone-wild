@@ -200,7 +200,6 @@ Results of executing the 3 given scripts with \texttt{omp\_set\_num\_threads(4)}
 
 \begin{lstlisting}
 $ gcc -fopenmp -o version_a version_a.c && ./version_a
-res=1
 
 $ gcc -fopenmp -o version_b version_b.c && ./version_b
 res=5
@@ -210,6 +209,8 @@ res=5
 \end{lstlisting}
 
 \subsection{How often is the function \texttt{omp\_tasks} called?}
+
+Let's add a print statement to the \texttt{omp\_tasks} function to see how often it is called:
 
 \begin{lstlisting}
 $ gcc -fopenmp -o version_a version_a.c && ./version_a
@@ -273,6 +274,13 @@ called with v=1
 called with v=2
 \end{lstlisting}
 
+As we can see, the function \texttt{omp\_tasks} is called:
+
+\begin{itemize}
+    \item 9 times in version A
+    \item 9 times in version B
+    \item 36 times in version c
+\end{itemize}
 
 
 
