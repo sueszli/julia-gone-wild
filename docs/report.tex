@@ -200,7 +200,7 @@ Here are some suggestions to fix the problems with the given code snippet:
 
 \subsection{What is the output of the three different versions?}
 
-Results of executing the 3 given scripts with \texttt{omp\_set\_num\_threads(4)}:
+Here are the results of the 3 given versions of the code snippet when compiled with \texttt{gcc -fopenmp} and executed with \texttt{omp\_set\_num\_threads(4)}:
 
 \begin{verbatim}
 $ gcc -fopenmp -o version_a version_a.c && ./version_a
@@ -211,6 +211,36 @@ res=5
 
 $ gcc -fopenmp -o version_c version_c.c && ./version_c
 res=5
+\end{verbatim}
+
+The results differ because of the \texttt{shared} and \texttt{private} clauses in the \texttt{omp\_task} function. The \texttt{shared} clause is used to share the result of the sub-task with the parent task, while the \texttt{private} clause is used to create a local copy of the result for each thread.
+
+Here's some ASCII art to illustrate the stack-trace in the case of one sub-task result being shared and the other being private:
+
+\begin{verbatim}
+v=5             -> final result: 1
+├── v=4         -> shared: 1
+|  ├── v=3      -> shared: 1
+|  |  ├── v=2   -> shared: 1
+|  |  └── v=1   -> private
+|  └── v=2      -> private
+└── v=3         -> private
+    ├── v=2     -> shared: 1
+    └── v=1     -> private
+\end{verbatim}
+
+And here's the stack-trace for the case where both sub-task results are shared:
+
+\begin{verbatim}
+v=5             -> final result: 5
+├── v=4         -> shared: 3
+|  ├── v=3      -> shared: 2
+|  |  ├── v=2   -> shared: 1
+|  |  └── v=1   -> shared: 1
+|  └── v=2      -> shared: 1
+└── v=3         -> shared: 2
+    ├── v=2     -> shared: 1
+    └── v=1     -> shared: 1
 \end{verbatim}
 
 \subsection{How often is the function \texttt{omp\_tasks} called?}
@@ -292,38 +322,32 @@ $ gcc -fopenmp -o version_c version_c.c && ./version_c | grep -c "called with v"
 num calls: 36
 \end{verbatim}
 
+
+
+
+
+
+
+
+
+
 \subsubsection{Version A}
 
 \lstinputlisting{./demo/compare1.c}
 
-For the base case of the recursive function the \texttt{master} pragma is used to create a single thread that executes the code block / function with the value \texttt{v=5}.
 
-Inside the \texttt{omp\_task} function, we then recursively call 2 sub-tasks with the values \texttt{v-1} and \texttt{v-2}. The result of the first sub-task is shared with the \texttt{shared} clause, while the result of the second sub-task is private to the thread that executes it with a local-only copy through the \texttt{private} clause.
-
-When values are not shared we fall back to the default integer assignment, which is 0. This is why the final result is 1.
-
-Here's some ASCII art to illustrate the stack trace with the results of the sub-tasks:
-
-\begin{verbatim}
-v=5             -> final result: 1
-├── v=4         -> shared: 1
-|  ├── v=3      -> shared: 1
-|  |  ├── v=2   -> shared: 1
-|  |  └── v=1   -> private
-|  └── v=2      -> private
-└── v=3         -> private
-    ├── v=2     -> shared: 1
-    └── v=1     -> private
-\end{verbatim}
 
 \subsubsection{Version B}
 
 \lstinputlisting{./demo/compare2.c}
 
+
+
+
+
 \subsubsection{Version C}
 
 \lstinputlisting{./demo/compare3.c}
-
 
 
 
