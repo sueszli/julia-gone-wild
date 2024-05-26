@@ -200,6 +200,7 @@ Results of executing the 3 given scripts with \texttt{omp\_set\_num\_threads(4)}
 
 \begin{lstlisting}
 $ gcc -fopenmp -o version_a version_a.c && ./version_a
+res=1
 
 $ gcc -fopenmp -o version_b version_b.c && ./version_b
 res=5
@@ -285,18 +286,17 @@ $ gcc -fopenmp -o version_c version_c.c && ./version_c | grep -c "called with v"
 num calls: 36
 \end{lstlisting}
 
-Let's analyze the stack trace of the function \texttt{omp\_tasks} to see why it is called so often in version C:
-
-\begin{lstlisting}
-$ gcc -fopenmp -g -o version_c version_c.c && gdb -ex "run" -ex "bt" -ex "quit" ./version_c
-
-
 \subsubsection{Version A}
+
+\lstinputlisting{./demo/compare1.c}
 
 \subsubsection{Version B}
 
+\lstinputlisting{./demo/compare2.c}
+
 \subsubsection{Version C}
 
+\lstinputlisting{./demo/compare3.c}
 
 
 
