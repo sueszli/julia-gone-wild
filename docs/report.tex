@@ -6,11 +6,15 @@ headings=normal,
 ]{scrartcl}
 
 \usepackage[parfill]{parskip}
+
 \usepackage{./docs/bopc}
 \usepackage{csvsimple}
 \usepackage{listings}
 \usepackage{booktabs}
 \usepackage{array}
+\usepackage[utf8]{inputenc}
+\usepackage{pmboxdraw}
+
 
 %% ==================== ADAPT ACCORDINGLY ==================== %%
 
@@ -43,11 +47,11 @@ headings=normal,
 
 The variable \texttt{a} stores the selected thread number for each parallel iteration, while \texttt{t} stores a non-atomic counter that all threads with the same ID increment. Unless no two threads are assigned the same iteration, the final value of \texttt{t} will be non-deterministic as each \texttt{var++} operation is in fact a read-modify-write operation:
 
-\begin{lstlisting}
+\begin{verbatim}
 movl  -4(%rbp), %eax   # load var into eax
 addl  $1, %eax         # increment eax by 1
 movl  %eax, -4(%rbp)   # store eax back into var
-\end{lstlisting}
+\end{verbatim}
 
 \subsection{Values for all elements in \texttt{a} and \texttt{t}}
 
@@ -112,7 +116,7 @@ Fortunately we were able to find one of the optimal solutions by using the LPT a
 
 \lstinputlisting{./demo/scheduler.py}
 
-\begin{lstlisting}
+\begin{verbatim}
 sorted tasks: [4, 3, 3, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1]
 
 worker 0:
@@ -141,7 +145,7 @@ worker 3:
         task 6, start: 6, end: 7 (duration: 1)
 
 time spent: 8
-\end{lstlisting}
+\end{verbatim}
 
 \begin{figure}[htbp]
     \centering
@@ -198,7 +202,7 @@ Here are some suggestions to fix the problems with the given code snippet:
 
 Results of executing the 3 given scripts with \texttt{omp\_set\_num\_threads(4)}:
 
-\begin{lstlisting}
+\begin{verbatim}
 $ gcc -fopenmp -o version_a version_a.c && ./version_a
 res=1
 
@@ -207,7 +211,7 @@ res=5
 
 $ gcc -fopenmp -o version_c version_c.c && ./version_c
 res=5
-\end{lstlisting}
+\end{verbatim}
 
 \subsection{How often is the function \texttt{omp\_tasks} called?}
 
@@ -215,27 +219,9 @@ Let's add a print statement to the \texttt{omp\_tasks} function to see how often
 
 This is the most straightforward way to print the stack-trace for our use case. I also tried to write a custom \texttt{lldb} python script and a bunch of C-libraries to achieve the same result, but they all failed when combined with the OpenMP runtime.
 
-Here's some ASCII art to illustrate the stack trace:
-
-\begin{lstlisting}
-    v=5
-    ├── v=4
-    |  ├── v=3
-    |  |  ├── v=2
-    |  |  |  └── v=1
-    |  |  └── v=1
-    |  └── v=2
-    |     └── v=1
-    └── v=3
-        ├── v=2
-        |  └── v=1
-        └── v=1
-    \begin{lstlisting}
-\end{lstlisting}
-
 And here's the output of the modified scripts:
 
-\begin{lstlisting}
+\begin{verbatim}
 $ gcc -fopenmp -o version_a version_a.c && ./version_a
 called with v=5
 called with v=3
@@ -304,17 +290,31 @@ called with v=2
 
 $ gcc -fopenmp -o version_c version_c.c && ./version_c | grep -c "called with v" | xargs echo "num calls:"
 num calls: 36
-\end{lstlisting}
+\end{verbatim}
 
 \subsubsection{Version A}
 
-The recursive function is called by the main thread with the pragma \texttt{master} and the value 5.
-
-It then calls itself recursively 2 more times with the values 4 (5-1) and the pragma \texttt{shared} and 3 (4-1) with the pragma \texttt{private}.
-
-The \texttt{shared} pragma means that the variable \texttt{v} is shared between all threads, while the \texttt{private} pragma means that each thread gets its own copy of the variable \texttt{v}.
-
 \lstinputlisting{./demo/compare1.c}
+
+For the base case of the recursive function the \texttt{master} pragma is used to create a single thread that executes the code block / function with the value \texttt{v=5}.
+
+Inside the \texttt{omp\_task} function, we then recursively call 2 sub-tasks with the values \texttt{v-1} and \texttt{v-2}. The result of the first sub-task is shared with the \texttt{shared} clause, while the result of the second sub-task is private to the thread that executes it with a local-only copy through the \texttt{private} clause.
+
+When values are not shared we fall back to the default integer assignment, which is 0. This is why the final result is 1.
+
+Here's some ASCII art to illustrate the stack trace with the results of the sub-tasks:
+
+\begin{verbatim}
+v=5             -> final result: 1
+├── v=4         -> shared: 1
+|  ├── v=3      -> shared: 1
+|  |  ├── v=2   -> shared: 1
+|  |  └── v=1   -> private
+|  └── v=2      -> private
+└── v=3         -> private
+    ├── v=2     -> shared: 1
+    └── v=1     -> private
+\end{verbatim}
 
 \subsubsection{Version B}
 

@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <omp.h>
 
-
 static int omp_tasks(int v) {
     printf("called with v=%d\n", v);
 
