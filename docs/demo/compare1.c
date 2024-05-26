@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <omp.h>
 
+
 static int omp_tasks(int v) {
     int a = 0, b = 0;
     if (v <= 2) {
@@ -17,6 +18,8 @@ static int omp_tasks(int v) {
 }
 
 void main() {
+    omp_set_num_threads(4);
+
     int res;
     #pragma omp parallel {
         #pragma omp master // master

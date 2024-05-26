@@ -18,6 +18,8 @@ static int omp_tasks(int v) {
 }
 
 void main() {
+    omp_set_num_threads(4);
+
     int res;
     #pragma omp parallel {
         #pragma omp single nowait // single nowait
