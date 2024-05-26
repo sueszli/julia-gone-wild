@@ -215,6 +215,26 @@ Let's add a print statement to the \texttt{omp\_tasks} function to see how often
 
 This is the most straightforward way to print the stack-trace for our use case. I also tried to write a custom \texttt{lldb} python script and a bunch of C-libraries to achieve the same result, but they all failed when combined with the OpenMP runtime.
 
+Here's some ASCII art to illustrate the stack trace:
+
+\begin{lstlisting}
+    v=5
+    ├── v=4
+    |  ├── v=3
+    |  |  ├── v=2
+    |  |  |  └── v=1
+    |  |  └── v=1
+    |  └── v=2
+    |     └── v=1
+    └── v=3
+        ├── v=2
+        |  └── v=1
+        └── v=1
+    \begin{lstlisting}
+\end{lstlisting}
+
+And here's the output of the modified scripts:
+
 \begin{lstlisting}
 $ gcc -fopenmp -o version_a version_a.c && ./version_a
 called with v=5
@@ -287,6 +307,12 @@ num calls: 36
 \end{lstlisting}
 
 \subsubsection{Version A}
+
+The recursive function is called by the main thread with the pragma \texttt{master} and the value 5.
+
+It then calls itself recursively 2 more times with the values 4 (5-1) and the pragma \texttt{shared} and 3 (4-1) with the pragma \texttt{private}.
+
+The \texttt{shared} pragma means that the variable \texttt{v} is shared between all threads, while the \texttt{private} pragma means that each thread gets its own copy of the variable \texttt{v}.
 
 \lstinputlisting{./demo/compare1.c}
 
