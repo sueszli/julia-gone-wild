@@ -210,7 +210,7 @@ res=5
 
 \subsection{How often is the function \texttt{omp\_tasks} called?}
 
-Let's add a print statement to the \texttt{omp\_tasks} function to see how often it is called:
+Let's add a print statement to the \texttt{omp\_tasks} function to see how often it is called / what values are passed to it:
 
 \begin{lstlisting}
 $ gcc -fopenmp -o version_a version_a.c && ./version_a
@@ -224,6 +224,9 @@ called with v=2
 called with v=1
 called with v=2
 
+$ gcc -fopenmp -o version_a version_a.c && ./version_a | grep -c "called with v" | xargs echo "num calls:"
+num calls: 9
+
 $ gcc -fopenmp -o version_b version_b.c && ./version_b
 called with v=5
 called with v=3
@@ -234,6 +237,9 @@ called with v=3
 called with v=1
 called with v=2
 called with v=2
+
+$ gcc -fopenmp -o version_b version_b.c && ./version_b | grep -c "called with v" | xargs echo "num calls:"
+num calls: 9
 
 $ gcc -fopenmp -o version_c version_c.c && ./version_c
 called with v=5
@@ -272,15 +278,10 @@ called with v=2
 called with v=3
 called with v=1
 called with v=2
+
+$ gcc -fopenmp -o version_c version_c.c && ./version_c | grep -c "called with v" | xargs echo "num calls:"
+num calls: 36
 \end{lstlisting}
-
-As we can see, the function \texttt{omp\_tasks} is called:
-
-\begin{itemize}
-    \item 9 times in version A
-    \item 9 times in version B
-    \item 36 times in version c
-\end{itemize}
 
 
 
