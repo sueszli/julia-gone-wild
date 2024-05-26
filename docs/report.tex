@@ -167,7 +167,9 @@ The makespan of the schedule \texttt{static,3} is 11, which is suboptimal compar
 
 \subsection{Schedule \texttt{dynamic,2}}
 
-The schedule \texttt{dynamic,2} assigns chunks of 2 tasks to the workers currently available.
+The schedule \texttt{dynamic,2} assigns chunks of 2 tasks to a random worker that is currently idle.
+
+The makespan of the schedule \texttt{dynamic,2} is 10, which is suboptimal compared to the LPT schedule but better than the \texttt{static,3} schedule. The Gantt chart in Figure \ref{fig:gantt_static3} shows the schedule.
 
 \begin{figure}[htbp]
     \centering
