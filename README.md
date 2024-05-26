@@ -1,4 +1,4 @@
-![](./julia-openmp/contrib/input1.png)
+<!-- ![](./julia-openmp/contrib/input1.png) -->
 
 # development
 
