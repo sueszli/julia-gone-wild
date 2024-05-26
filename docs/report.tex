@@ -249,6 +249,14 @@ Let's add a print statement to the \texttt{omp\_tasks} function to see how often
 
 This is the most straightforward way to print the stack-trace for our use case. I also tried to write a custom \texttt{lldb} python script and a bunch of C-libraries to achieve the same result, but they all failed when combined with the OpenMP runtime.
 
+Here are the modified versions of the code snippets:
+
+\lstinputlisting{./demo/compare1.c}
+
+\lstinputlisting{./demo/compare2.c}
+
+\lstinputlisting{./demo/compare3.c}
+
 And here's the output of the modified scripts:
 
 \begin{verbatim}
@@ -322,43 +330,17 @@ $ gcc -fopenmp -o version_c version_c.c && ./version_c | grep -c "called with v"
 num calls: 36
 \end{verbatim}
 
+We've already discussed the effect the inner \texttt{shared} and \texttt{private} clauses have on the final result. The number of calls to the \texttt{omp\_tasks} function however depends on the the pragma used in the \texttt{main} function:
 
+\begin{itemize}
 
+    \item Version A / \texttt{master}: This pragma causes the recursive function to be called from the \texttt{main} function just once. The \texttt{master} pragma ensures that only the master thread executes the critical section.
 
+    \item Version B / \texttt{single nowait}: The \texttt{single} pragma ensures that only one thread executes the critical section, while the \texttt{nowait} clause allows the thread to continue executing the next section of code without waiting for the other threads to finish. The \texttt{nowait} clause in this case doesn't have any effect as it is the last section of code in the \texttt{parallel} region of the \texttt{main} function.
+    
+    \item Version C / \texttt{critical}: This pragma caused the recursive function to be executed 36 (4 threads $\cdot$ 9 recursive calls) times. The \texttt{critical} clause ensures that only one thread can execute the critical section at a time but doesn't have any guarantees on how often the critical section is executed.
 
-
-
-
-
-
-\subsubsection{Version A}
-
-\lstinputlisting{./demo/compare1.c}
-
-
-
-\subsubsection{Version B}
-
-\lstinputlisting{./demo/compare2.c}
-
-
-
-
-
-\subsubsection{Version C}
-
-\lstinputlisting{./demo/compare3.c}
-
-
-
-
-
-
-
-
-
-
-
+\end{itemize}
 
 \section{Exercise 5}
 
