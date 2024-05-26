@@ -11,8 +11,6 @@ headings=normal,
 \usepackage{listings}
 \usepackage{booktabs}
 \usepackage{array}
-\usepackage{pgfgantt}
-
 
 %% ==================== ADAPT ACCORDINGLY ==================== %%
 
@@ -198,7 +196,92 @@ Here are some suggestions to fix the problems with the given code snippet:
 
 \subsection{What is the output of the three different versions?}
 
+Results of executing the 3 given scripts with \texttt{omp\_set\_num\_threads(4)}:
+
+\begin{lstlisting}
+$ gcc -fopenmp -o version_a version_a.c && ./version_a
+res=1
+
+$ gcc -fopenmp -o version_b version_b.c && ./version_b
+res=5
+
+$ gcc -fopenmp -o version_c version_c.c && ./version_c
+res=5
+\end{lstlisting}
+
 \subsection{How often is the function \texttt{omp\_tasks} called?}
+
+\begin{lstlisting}
+$ gcc -fopenmp -o version_a version_a.c && ./version_a
+called with v=5
+called with v=3
+called with v=4
+called with v=1
+called with v=3
+called with v=2
+called with v=2
+called with v=1
+called with v=2
+
+$ gcc -fopenmp -o version_b version_b.c && ./version_b
+called with v=5
+called with v=3
+called with v=1
+called with v=4
+called with v=2
+called with v=3
+called with v=1
+called with v=2
+called with v=2
+
+$ gcc -fopenmp -o version_c version_c.c && ./version_c
+called with v=5
+called with v=3
+called with v=1
+called with v=2
+called with v=4
+called with v=2
+called with v=3
+called with v=1
+called with v=2
+called with v=5
+called with v=3
+called with v=1
+called with v=2
+called with v=4
+called with v=2
+called with v=3
+called with v=1
+called with v=2
+called with v=5
+called with v=3
+called with v=1
+called with v=2
+called with v=4
+called with v=3
+called with v=1
+called with v=2
+called with v=2
+called with v=5
+called with v=3
+called with v=1
+called with v=2
+called with v=4
+called with v=2
+called with v=3
+called with v=1
+called with v=2
+\end{lstlisting}
+
+
+
+
+
+
+
+
+
+
 
 
 
