@@ -5,6 +5,7 @@ headsepline, % line under header
 headings=normal,
 ]{scrartcl}
 
+\usepackage[parfill]{parskip}
 \usepackage{./docs/bopc}
 \usepackage{csvsimple}
 \usepackage{listings}
@@ -105,9 +106,11 @@ See Tables \ref{tab:values_a} and \ref{tab:values_t} for the values of \texttt{a
 
 \subsection{Optimal Schedule}
 
-Assuming the given tasks can be executed independently and the goal is to minimize the total execution time, with 4 workers available, the optimal schedule can be determined through the "Longest Processing Time" (LPT) rule. The LPT rule schedules tasks in decreasing order of processing time, which is optimal for minimizing the total completion time. This is often a good heuristic for this type of problem and tends to provide good results.
+To minimize the total execution time with 4 workers, we can use the ``Longest Processing Time'' (LPT) algorithm by R. L. Graham in 1969. Here's how it works: First, sort the tasks by duration in descending order. Then, assign the tasks to the workers in a round-robin fashion. But beware that the LPT isn't guaranteed to find the optimal solution, but just to have a provable upper bound of $\lceil 4/3 \cdot \text{OPT} \rceil$ where OPT is the optimal solution.
 
-First, we sort the tasks by duration in descending order, then we assign the first $n$ tasks to the $n$ workers in a round-robin fashion.
+Assuming that tasks can be interrupted and resumed at any time, we can calculate the OTP as follows: $\text{OPT} = \lceil \sum_{i=0}^{16} \text{task duration}_i / 4 \rceil = \lceil 31 / 4 \rceil = 8$.
+
+Fortunately we were able to find one of the optimal solutions by using the LPT algorithm.
 
 \lstinputlisting{./demo/scheduler.py}
 
@@ -142,6 +145,13 @@ worker 3:
 time spent: 8
 \end{lstlisting}
 
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{./assets/gantt.png}
+    \caption{Gantt chart of the LPT schedule (which happens to be optimal).}
+    \label{fig:gantt}
+\end{figure}
+
 \subsection{Schedule \texttt{static,3}}
 
 \subsection{Schedule \texttt{dynamic,2}}
@@ -171,16 +181,6 @@ time spent: 8
 \subsection{Strong scaling analysis}
 
 \subsection{Weak scaling analysis}
-
-\section{Exercise 7}
-
-\subsection{Convert OpenMP code to CUDA}
-
-\subsection{Running time analysis}
-
-\subsection{Impact of block size}
-
-\subsection{Running time: CPU vs GPU code}
 
 \newpage
 
