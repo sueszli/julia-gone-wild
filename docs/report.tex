@@ -1,7 +1,7 @@
 \documentclass[a4paper,%
-8pt, % font size
-DIV99, % 1.00 text width
-headsepline, % line under header
+7pt,%
+DIV12,
+headsepline,%
 headings=normal,
 ]{scrartcl}
 
@@ -147,7 +147,7 @@ time spent: 8
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.5\textwidth]{./assets/gantt_lpt.png}
+    \includegraphics[width=0.75\textwidth]{./assets/gantt_lpt.png}
     \caption{Gantt chart of the LPT schedule (which happens to be optimal).}
     \label{fig:gantt_lpt}
 \end{figure}
@@ -160,7 +160,7 @@ The makespan of the schedule \texttt{static,3} is 11, which is suboptimal compar
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.5\textwidth]{./assets/static3.png}
+    \includegraphics[width=0.75\textwidth]{./assets/static3.png}
     \caption{Gantt chart of the schedule \texttt{static,3}.}
     \label{fig:gantt_static3}
 \end{figure}
@@ -173,7 +173,7 @@ The makespan of the schedule \texttt{dynamic,2} is 10, which is suboptimal compa
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.5\textwidth]{./assets/dynamic2.png}
+    \includegraphics[width=0.75\textwidth]{./assets/dynamic2.png}
     \caption{Gantt chart of the schedule \texttt{dynamic,2}.}
     \label{fig:gantt_static3}
 \end{figure}
@@ -182,7 +182,15 @@ The makespan of the schedule \texttt{dynamic,2} is 10, which is suboptimal compa
 
 \subsection{Fix the problems with this OpenMP code}
 
-We want to implement the function \texttt{omp_odd_counter(int *a, int n)}, which is supposed to count the odd numbers in an array \texttt{a[]} of size \texttt{n}.
+Here are some suggestions to fix the problems with the given code snippet:
+
+\begin{itemize}
+    \item The instruction \texttt{count\_odd += my\_count\_odd;} doesn't make a lot of sense given that only the \texttt{\#pragma} region inside the \texttt{for} loop is parallelized. Replace the \texttt{my\_count\_odd} variable with the shared variable \texttt{count\_odd} and use an atomic operation to increment it. 
+
+    \item Or even better: Use a reduction clause to sum up the number of odd numbers in the array instead of declaring a shared variable and incrementing it atomically yourself.
+    
+    \item Turn the function \texttt{static} so it's just visible in a single translation / compilation unit (optional).
+\end{itemize}
 
 \lstinputlisting{./demo/odd_counter.c}
 

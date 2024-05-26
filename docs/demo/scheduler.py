@@ -3,7 +3,8 @@ from operator import itemgetter
 
 
 def schedule_tasks(task_durations):
-    sorted_tasks = sorted(enumerate(task_durations), key=lambda x: x[1], reverse=True)  # fst: task_id, snd: duration
+    # fst: task_id, snd: duration
+    sorted_tasks = sorted(enumerate(task_durations), key=lambda x: x[1], reverse=True)
 
     worker_utilization = [0] * 4  # time spent on work by each worker so far
 
