@@ -147,12 +147,23 @@ time spent: 8
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.8\textwidth]{./assets/gantt_lpt.png}
+    \includegraphics[width=0.5\textwidth]{./assets/gantt_lpt.png}
     \caption{Gantt chart of the LPT schedule (which happens to be optimal).}
-    \label{fig:gantt}
+    \label{fig:gantt_lpt}
 \end{figure}
 
 \subsection{Schedule \texttt{static,3}}
+
+The schedule \texttt{static,3} assigns each task to a worker in a round-robin fashion with a chunk size of 3.
+
+The makespan of the schedule \texttt{static,3} is 11, which is suboptimal compared to the LPT schedule. The Gantt chart in Figure \ref{fig:gantt_static3} shows the schedule.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.5\textwidth]{./assets/static3.png}
+    \caption{Gantt chart of the schedule \texttt{static,3}.}
+    \label{fig:gantt_static3}
+\end{figure}
 
 \subsection{Schedule \texttt{dynamic,2}}
 
