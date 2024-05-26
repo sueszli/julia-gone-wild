@@ -270,6 +270,7 @@ called with v=2
 called with v=2
 called with v=1
 called with v=2
+res=1
 
 $ gcc -fopenmp -o version_a version_a.c && ./version_a | grep -c "called with v" | xargs echo "num calls:"
 num calls: 9
@@ -284,6 +285,7 @@ called with v=3
 called with v=1
 called with v=2
 called with v=2
+res=5
 
 $ gcc -fopenmp -o version_b version_b.c && ./version_b | grep -c "called with v" | xargs echo "num calls:"
 num calls: 9
@@ -325,6 +327,7 @@ called with v=2
 called with v=3
 called with v=1
 called with v=2
+res=5
 
 $ gcc -fopenmp -o version_c version_c.c && ./version_c | grep -c "called with v" | xargs echo "num calls:"
 num calls: 36

@@ -1,3 +1,7 @@
+/*
+ * Version C
+ */
+
 #include <stdio.h>
 #include <omp.h>
 
