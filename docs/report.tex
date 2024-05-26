@@ -106,7 +106,7 @@ See Tables \ref{tab:values_a} and \ref{tab:values_t} for the values of \texttt{a
 
 \subsection{Optimal Schedule}
 
-To minimize the total execution time with 4 workers, we can use the ``Longest Processing Time'' (LPT) algorithm by R. L. Graham in 1969. Here's how it works: First, sort the tasks by duration in descending order. Then, assign the tasks to the workers in a round-robin fashion. But beware that the LPT isn't guaranteed to find the optimal solution, but just to have a provable upper bound of $\lceil 4/3 \cdot \text{OPT} \rceil$ where OPT is the optimal solution.
+To minimize the total execution time with 4 workers, we can use the ``Longest Processing Time'' (LPT) algorithm by R. L. Graham in 1969. Here's how it works: First, sort the tasks by duration in descending order. Then, assign the tasks to the least loaded worker. But beware that the LPT isn't guaranteed to find the optimal solution, but just to have a provable upper bound of $\lceil 4/3 \cdot \text{OPT} \rceil$ where OPT is the optimal solution.
 
 Assuming that tasks can be interrupted and resumed at any time, we can calculate the OTP as follows: $\text{OPT} = \lceil \sum_{i=0}^{16} \text{task duration}_i / 4 \rceil = \lceil 31 / 4 \rceil = 8$.
 
@@ -166,6 +166,8 @@ The makespan of the schedule \texttt{static,3} is 11, which is suboptimal compar
 \end{figure}
 
 \subsection{Schedule \texttt{dynamic,2}}
+
+The schedule \texttt{dynamic,2} assigns chunks of 2 tasks to the workers currently available.
 
 \begin{figure}[htbp]
     \centering
