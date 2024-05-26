@@ -210,7 +210,9 @@ res=5
 
 \subsection{How often is the function \texttt{omp\_tasks} called?}
 
-Let's add a print statement to the \texttt{omp\_tasks} function to see how often it is called / what values are passed to it:
+Let's add a print statement to the \texttt{omp\_tasks} function to see how often it is called / what values are passed to it.
+
+This is the most straightforward way to print the stack-trace for our use case. I also tried to write a custom \texttt{lldb} python script and a bunch of C-libraries to achieve the same result, but they all failed when combined with the OpenMP runtime.
 
 \begin{lstlisting}
 $ gcc -fopenmp -o version_a version_a.c && ./version_a
@@ -283,7 +285,17 @@ $ gcc -fopenmp -o version_c version_c.c && ./version_c | grep -c "called with v"
 num calls: 36
 \end{lstlisting}
 
+Let's analyze the stack trace of the function \texttt{omp\_tasks} to see why it is called so often in version C:
 
+\begin{lstlisting}
+$ gcc -fopenmp -g -o version_c version_c.c && gdb -ex "run" -ex "bt" -ex "quit" ./version_c
+
+
+\subsubsection{Version A}
+
+\subsubsection{Version B}
+
+\subsubsection{Version C}
 
 
 
