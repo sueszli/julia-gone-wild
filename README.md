@@ -1,3 +1,5 @@
+<!-- ![](./julia-openmp/contrib/input1.png) -->
+
 # development
 
 _compiling latex_:
@@ -19,7 +21,8 @@ brew install llvm libomp cmake gcc
 gcc --version # ignore this version, v15 didn't work for me
 brew list --versions gcc # this is the right one
 
-gcc-14 -fopenmp -o ./docs/demo/test ./docs/demo/test.c && ./docs/demo/test && rm -rf ./docs/demo/test
+filename="scheduler"
+gcc-14 -fopenmp -o ./docs/demo/$filename ./docs/demo/$filename.c && ./docs/demo/$filename && rm -rf ./docs/demo/$filename
 ```
 
 _executing SLURM jobs on the TU Wien hydra cluster_:
