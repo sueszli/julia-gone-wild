@@ -10,7 +10,7 @@ const int fheight2 = 1;
 
 
 void apply_filter(png_bytep *row_pointers, png_bytep *buf, int width, int height, double filter[3][3], int rounds) {
-    int block_size = 16;
+    int block_size = 64;
     for(int r=0; r<rounds; r++) {
         #pragma omp parallel
         {
@@ -27,6 +27,7 @@ void apply_filter(png_bytep *row_pointers, png_bytep *buf, int width, int height
                             }
                         }
                     }
+                }
              }
         }
 
