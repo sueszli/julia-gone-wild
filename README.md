@@ -1,3 +1,5 @@
+<!-- ![](./julia-openmp/contrib/input1.png) -->
+
 # development
 
 _compiling latex_:
