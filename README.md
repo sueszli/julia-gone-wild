@@ -1,4 +1,4 @@
-parallel computing of julia fractals ✨
+parallel computation of julia fractals ✨
 
 <img src="./julia-openmp/contrib/input1.png" width="300" height="300" />
 
