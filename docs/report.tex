@@ -420,7 +420,7 @@ In the weak scaling scenario, where both the number of cores and problem size in
 
 \begin{table}[htbp]
 \centering
-\csvautotabular{juliap_job.csv}
+\csvautotabular{./output/juliap_job.csv}
 \caption{julia strong scaling}
 \label{tab:anotherlabel}
 \end{table}
@@ -450,70 +450,44 @@ In the weak scaling scenario, where both the number of cores and problem size in
 
 \begin{table}[htbp]
 \centering
-\csvautotabular{filter_strong_job_16.csv}
+\csvautotabular{./output/filter_strong_job_16.csv}
 \caption{filter strong scaling - blocksize = 16}
 \label{tab:label1}
 \end{table}
 
 \begin{table}[htbp]
 \centering
-\csvautotabular{filter_strong_job_32.csv}
+\csvautotabular{./output/filter_strong_job_32.csv}
 \caption{filter strong scaling - blocksize = 32}
 \label{tab:label2}
 \end{table}
 
 \begin{table}[htbp]
 \centering
-\csvautotabular{filter_strong_job_64.csv}
+\csvautotabular{./output/filter_strong_job_64.csv}
 \caption{filter strong scaling - blocksize = 64}
 \label{tab:label3}
 \end{table}
 
 \begin{table}[htbp]
 \centering
-\csvautotabular{filter_weak_job_16.csv}
+\csvautotabular{./output/filter_weak_job_16.csv}
 \caption{filter weak scaling - blocksize = 16}
 \label{tab:label4}
 \end{table}
 
 \begin{table}[htbp]
 \centering
-\csvautotabular{filter_weak_job_32.csv}
+\csvautotabular{./output/filter_weak_job_32.csv}
 \caption{filter weak scaling - blocksize = 32}
 \label{tab:label5}
 \end{table}
 
 \begin{table}[htbp]
 \centering
-\csvautotabular{filter_weak_job_64.csv}
+\csvautotabular{./output/filter_weak_job_64.csv}
 \caption{filter weak scaling - blocksize = 64}
 \label{tab:label6}
 \end{table}
-
-% \section{Addendum: Raw Data}
-
-% \begin{figure}[htbp]
-%     \centering
-%     \csvautotabular{./output/filter_strong.csv}\label{tab:filter_strong}
-%     \caption{Raw output from "filter strong" job.}
-% \end{figure}
-
-% \begin{figure}[htbp]
-%     \centering
-%     \csvautotabular{./output/filter_weak.csv}\label{tab:filter_weak}
-%     \caption{Raw output from "weak scaling" job. Timed out on \textit{slurmstepd} due to time out / time limit.}
-% \end{figure}
-
-% \begin{figure}[htbp]
-%     \centering
-%     \csvautotabular{./output/juliap.csv}\label{tab:juliap}
-%     \caption{Raw output from "juliap" job.}
-% \end{figure}
-
-% \begin{figure}[htbp]
-%     \centering
-%     \csvautotabular{./output/juliap2.csv}\label{tab:juliap2}
-%     \caption{Raw output from "juliap2" job.}
-% \end{figure}
 
 \end{document}
