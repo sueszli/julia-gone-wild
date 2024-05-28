@@ -16,6 +16,8 @@ runtimes:
 ![Minimum runtime vs number of cores for an input size of
 1100](./docs/assets/juliap_job_1100.png)
 
+different scheduling strategies:
+
 ![Minimum runtime vs schedule option for an input size of 1100 and
 16 cores](./docs/assets/juliap2_job.png)
 
