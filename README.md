@@ -1,6 +1,6 @@
 <!-- ![](./julia-openmp/contrib/input1.png) -->
 
-<img src="./julia-openmp/contrib/input1.png" width="100" height="100" />
+<img src="./julia-openmp/contrib/input1.png" width="300" height="300" />
 
 # development
 
