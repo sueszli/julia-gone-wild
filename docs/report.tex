@@ -345,58 +345,175 @@ We've already discussed the effect the inner \texttt{shared} and \texttt{private
 
 \end{itemize}
 
-
-
-
-
-
-
-
-
-
-
 \section{Exercise 5}
 
 \subsection{Parallelize the pixel computation}
 
+The \texttt{for} is used to parallelize the loops and needs to be called inside parallel blocks to be effective which explains the \texttt{\#pragma omp parallel for}. In order to guarantee a canonical form \texttt{i} and \texttt{j} are set to private variables. Setting \texttt{nit} and \texttt{z} to \texttt{private} ensures that each thread has its own instance of these variables so that there are no errors in the computation. Since the remaining variables are constants, there is no need for synchronization. Lastly, a \texttt{collapse(2)} allows the nested loops to be treated as a single loop, which can improve parallel efficiency. This is only possible because they are perfectly nested loops. 
+
 \subsection{Running time analysis}
 
+The plot~\ref{fig:juliap_job_90} shows that using more cores reduces running time significantly up to 16 cores. From 1 to 4 cores, the running time drops sharply, then continues to improve up to 16 cores. Beyond 16 cores, the benefits decrease, and the running time stays around 0.02 seconds. Adding more than 24 cores slightly increases the running time, likely due to overhead. Overall, the program performs best with up to 16 cores, with minimal gains and some overhead issues beyond that.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\linewidth]{./juliap_job_90.png}
+    \caption{Minimum runnting time vs number of cores for an input size of 90}
+    \label{fig:juliap_job_90}
+\end{figure}
+
+\newpage
+When setting the input size to 1100, figure~\ref{fig:juliap_job_1100} reveals that the running time decreases significantly up to 16 cores, similar to the n=90 case. Beyond 16 cores, the running time continues to decrease but at a much slower rate, and eventually stabilizes. Unlike the n=90 case, there is no noticeable increase in running time when using more than 24 cores, suggesting that the overhead is better managed or less impactful for larger workloads. The larger problem size of n=1100 benefits more from parallelization, as distributing the increased workload across multiple cores leads to more substantial performance gains.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\linewidth]{./juliap_job_1100.png}
+    \caption{Minimum running time vs number of cores for an input size of 1100}
+    \label{fig:juliap_job_1100}
+\end{figure}
+
 \subsection{Influence of schedule parameter}
+
+The graph~\ref{fig:juliap2_job} demonstrates minimal differences in running times for different scheduling options with n=1100 and 16 cores. This suggests that the workload is well-balanced across the cores regardless of the schedule used which can also be confirmed by the previously discussed figure~\ref{fig:juliap_job_90} and figure~\ref{fig:juliap_job_1100}.  \texttt{Guided,8} performs slightly better than \texttt{dynamic,10} , likely due to better adjustment of chunk sizes. Both \texttt{static} and \texttt{static,1} schedules show similar performance, with \texttt{static,1} marginally better. Overall, the uniform nature of the workload leads to evenly distributed loads, making the scheduling overhead negligible.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\linewidth]{./juliap2_job.png}
+    \caption{Minimum running time vs schedule option for an input size of 1100 and 16 cores}
+    \label{fig:juliap2_job}
+\end{figure}
+
+% ----------------------------------------------------------------
 
 \section{Exercise 6}
 
 \subsection{Parallelize the filter computation}
 
+Again, the thread team is created with \texttt{\#pragma omp parallel} and the tasks are created inside the parallel section. Without \texttt{single} each thread of the team would call \texttt{filter\_on\_pixel}. 
+The private variables are initialized with the value of the outside variable, by defining them as \texttt{firstprivate} because otherwise all tasks created within the loop would reference the same i and j variables. The task-based parallelism would create a task for each pixel, which is why the block\_size was adapted and experimented with.
+
 \subsection{Strong scaling analysis}
+
+Figure~\ref{fig:strong_scaling_plot} shows that for a fixed problem size and varying the number of cores, the performance shows a clear trend where smaller block sizes (like 16) result in significantly higher running times as the number of cores increases. This sharp increase, especially noticeable at 32 cores, suggests that block size 16 is not well-suited for higher core counts. Larger block sizes (32 and 64) maintain relatively low running times with a gradual increase, indicating better parallel efficiency, likely due to reduced overhead and better cache utilization.  The optimal core range for block sizes 32 and 64 appears to be 16 to 24, where the running time is minimized.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\linewidth]{./strong_scaling_plot.png}
+    \caption{Minimum running time vs number of cores for r=1 and various block sizes}
+    \label{fig:strong_scaling_plot}
+\end{figure}
 
 \subsection{Weak scaling analysis}
 
+In the weak scaling scenario, where both the number of cores and problem size increase proportionally, the running time should ideally remain constant if the system scales perfectly. However, as figure~\ref{fig:weak_scaling_plot} shows, the running time increases with a block size of 16 as there is a sharp increase indicating poor scalability and higher overheads as the workload grows. On the other hand, block sizes 32 and 64 exhibit much flatter curves, indicating better workload distribution. As a result, they provide a more stable and predictable performance across different core counts. 
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\linewidth]{./weak_scaling_plot.png}
+    \caption{Minimum running time vs number of cores for r=p and various block sizes}
+    \label{fig:weak_scaling_plot}
+\end{figure}
+
 \newpage
 
-\section{Addendum: Raw Data}
+\section*{Appendix}
 
-\begin{figure}[htbp]
-    \centering
-    \csvautotabular{./output/filter_strong.csv}\label{tab:filter_strong}
-    \caption{Raw output from "filter strong" job.}
-\end{figure}
+\begin{table}[htbp]
+\centering
+\csvautotabular{juliap_job.csv}
+\caption{julia strong scaling}
+\label{tab:anotherlabel}
+\end{table}
 
-\begin{figure}[htbp]
+\begin{table}[htbp]
     \centering
-    \csvautotabular{./output/filter_weak.csv}\label{tab:filter_weak}
-    \caption{Raw output from "weak scaling" job. Timed out on \textit{slurmstepd} due to time out / time limit.}
-\end{figure}
+    \begin{tabular}{|l|c|c|c|}
+        \hline
+        schedule & n & p & time \\
+        \hline
+        static & 1100 & 16 & 2.450491 \\
+        static & 1100 & 16 & 2.448260 \\
+        static & 1100 & 16 & 2.449136 \\
+        static,1 & 1100 & 16 & 2.448672 \\
+        static,1 & 1100 & 16 & 2.446850 \\
+        static,1 & 1100 & 16 & 2.446568 \\
+        dynamic,10 & 1100 & 16 & 2.447841 \\
+        dynamic,10 & 1100 & 16 & 2.447689 \\
+        dynamic,10 & 1100 & 16 & 2.453576 \\
+        guided,8 & 1100 & 16 & 2.447433 \\
+        guided,8 & 1100 & 16 & 2.447667 \\
+        guided,8 & 1100 & 16 & 2.446407 \\
+        \hline
+    \end{tabular}
+    \caption{julia schedule}
+\end{table}
 
-\begin{figure}[htbp]
-    \centering
-    \csvautotabular{./output/juliap.csv}\label{tab:juliap}
-    \caption{Raw output from "juliap" job.}
-\end{figure}
+\begin{table}[htbp]
+\centering
+\csvautotabular{filter_strong_job_16.csv}
+\caption{filter strong scaling - blocksize = 16}
+\label{tab:label1}
+\end{table}
 
-\begin{figure}[htbp]
-    \centering
-    \csvautotabular{./output/juliap2.csv}\label{tab:juliap2}
-    \caption{Raw output from "juliap2" job.}
-\end{figure}
+\begin{table}[htbp]
+\centering
+\csvautotabular{filter_strong_job_32.csv}
+\caption{filter strong scaling - blocksize = 32}
+\label{tab:label2}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\csvautotabular{filter_strong_job_64.csv}
+\caption{filter strong scaling - blocksize = 64}
+\label{tab:label3}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\csvautotabular{filter_weak_job_16.csv}
+\caption{filter weak scaling - blocksize = 16}
+\label{tab:label4}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\csvautotabular{filter_weak_job_32.csv}
+\caption{filter weak scaling - blocksize = 32}
+\label{tab:label5}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\csvautotabular{filter_weak_job_64.csv}
+\caption{filter weak scaling - blocksize = 64}
+\label{tab:label6}
+\end{table}
+
+% \section{Addendum: Raw Data}
+
+% \begin{figure}[htbp]
+%     \centering
+%     \csvautotabular{./output/filter_strong.csv}\label{tab:filter_strong}
+%     \caption{Raw output from "filter strong" job.}
+% \end{figure}
+
+% \begin{figure}[htbp]
+%     \centering
+%     \csvautotabular{./output/filter_weak.csv}\label{tab:filter_weak}
+%     \caption{Raw output from "weak scaling" job. Timed out on \textit{slurmstepd} due to time out / time limit.}
+% \end{figure}
+
+% \begin{figure}[htbp]
+%     \centering
+%     \csvautotabular{./output/juliap.csv}\label{tab:juliap}
+%     \caption{Raw output from "juliap" job.}
+% \end{figure}
+
+% \begin{figure}[htbp]
+%     \centering
+%     \csvautotabular{./output/juliap2.csv}\label{tab:juliap2}
+%     \caption{Raw output from "juliap2" job.}
+% \end{figure}
 
 \end{document}
