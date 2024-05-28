@@ -1,16 +1,46 @@
-<!-- ![](./julia-openmp/contrib/input1.png) -->
+parallel computing of julia fractals ✨
 
 <img src="./julia-openmp/contrib/input1.png" width="300" height="300" />
 
-# development
+# benchmark results
 
-_compiling latex_:
+<br><br><br>
 
-```bash
-brew install --verbose --debug mactex
+# system specs
 
-pdflatex -interaction=nonstopmode -output-directory=./docs ./docs/report.tex
+the system used for benchmarking was a hydra node with the following specs:
+
+```plaintext
+bopc23s9@hydra-head:~$ lscpu
+
+Architecture:                    x86_64
+CPU op-mode(s):                  32-bit, 64-bit
+Byte Order:                      Little Endian
+Address sizes:                   46 bits physical, 48 bits virtual
+CPU(s):                          16
+On-line CPU(s) list:             0-15
+Thread(s) per core:              1
+Core(s) per socket:              16
+Socket(s):                       1
+NUMA node(s):                    1
+Vendor ID:                       GenuineIntel
+CPU family:                      6
+Model:                           85
+Model name:                      Intel(R) Xeon(R) Gold 6130 CPU @ 2.10GHz
+Stepping:                        4
+CPU MHz:                         1000.151
+CPU max MHz:                     3700.0000
+CPU min MHz:                     1000.0000
+BogoMIPS:                        4200.00
+L1d cache:                       512 KiB
+L1i cache:                       512 KiB
+L2 cache:                        16 MiB
+L3 cache:                        22 MiB
+NUMA node0 CPU(s):               0-15
+...
 ```
+
+# development
 
 _installing openmp_:
 
