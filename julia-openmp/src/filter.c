@@ -31,9 +31,9 @@ void apply_filter(png_bytep *row_pointers, png_bytep *buf, int width, int height
              }
         }
 
-	    // swap buffer with image
-	    png_bytep *tmp = buf;
-	    buf = row_pointers;
-	    row_pointers = tmp;
+	// swap buffer with image
+	png_bytep *tmp = buf;
+	buf = row_pointers;
+	row_pointers = tmp;
     }
 }
