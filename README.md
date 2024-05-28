@@ -11,7 +11,7 @@ openmp has a bunch of nifty abstraction layers to parallelize code. you can redu
 runtimes:
 
 ![Minimum runtime vs number of cores for an input size of
-90](./assets/juliap_job_90.png)
+90](./docs/assets/juliap_job_90.png)
 
 ![Minimum runtime vs number of cores for an input size of
 1100](./docs/assets/juliap_job_1100.png)
