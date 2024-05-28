@@ -46,6 +46,24 @@ sizes](./docs/assets/weak_scaling_plot.png)
 | guided,8   | 1100 | 16  | 2.447667 |
 | guided,8   | 1100 | 16  | 2.446407 |
 
+# metrics
+
+_speedup_
+
+-   what difference does parallelization make?
+-   $S_a(n,p) = \frac{T_{\text{seq}}(n)}{T_{\text{par}}(n,p)}$ = absolute speedup
+-   $S_r(n,p) = \frac{T_{\text{par}}(n, 1)}{T_{\text{par}}(n,p)}$ = relative speedup
+-   where:
+    -   $n$ = input size
+    -   $p$ = number of processors
+    -   $T_{\text{par}}(n,p)$ = parallel runtime
+    -   $T_{\text{seq}}(n)$ = sequential runtime
+
+_parallelization efficiency_
+
+-   what difference does each processor make?
+-   $E(n,p) = \frac{T_{\text{seq}}(n)}{p \cdot T_{\text{par}}(n,p)} = \frac{1}{p} \cdot S_a(n,p)$
+
 # system specs
 
 the system used for benchmarking was a hydra node with the following specs:
