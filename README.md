@@ -2,8 +2,6 @@ parallel computation of julia fractals ✨
 
 <img src="./julia-openmp/contrib/input1.png" width="300" height="300" />
 
-<br><br><br>
-
 # openmp benchmark results
 
 openmp has a bunch of nifty abstraction layers to parallelize code. you can reduce, collapse and schedule loops, create tasks and sections, and even use simd instructions. this project benchmarks the performance of different openmp parallelization strategies on a julia fractal computation.
