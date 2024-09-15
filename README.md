@@ -1,4 +1,6 @@
-parallel computation of julia fractals ✨
+# parallel computation of julia fractals ✨
+
+> for a python version see: https://github.com/sueszli/julia.py
 
 <img src="./julia-openmp/contrib/input1.png" width="300" height="300" />
 
