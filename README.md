@@ -83,15 +83,3 @@ NUMA node0 CPU(s):               0-15
 ...
 ```
 
-# development
-
-_installing openmp_:
-
--   see: https://stackoverflow.com/a/29109926/13045051
--   see: https://mac.r-project.org/openmp/
-
-_executing SLURM jobs on the TU Wien hydra cluster_:
-
--   create the binary on the machine you want to run it on - otherwise the binary will be compiled for the wrong architecture. on arm64, make sure to compile with `cmake -DCMAKE_C_COMPILER=/opt/local/bin/gcc-mp-13` or similar.
--   delete `CMakeCache.txt`
--   give `./bin` exec permissions
