@@ -31,24 +31,7 @@ weak scaling analysis:
 ![Minimum running time vs number of cores for r=p and various block
 sizes](./docs/assets/weak_scaling_plot.png)
 
-# raw data
-
-| schedule   | n    | p   | time     |
-| ---------- | ---- | --- | -------- |
-| static     | 1100 | 16  | 2.450491 |
-| static     | 1100 | 16  | 2.448260 |
-| static     | 1100 | 16  | 2.449136 |
-| static,1   | 1100 | 16  | 2.448672 |
-| static,1   | 1100 | 16  | 2.446850 |
-| static,1   | 1100 | 16  | 2.446568 |
-| dynamic,10 | 1100 | 16  | 2.447841 |
-| dynamic,10 | 1100 | 16  | 2.447689 |
-| dynamic,10 | 1100 | 16  | 2.453576 |
-| guided,8   | 1100 | 16  | 2.447433 |
-| guided,8   | 1100 | 16  | 2.447667 |
-| guided,8   | 1100 | 16  | 2.446407 |
-
-# metrics
+metrics:
 
 _speedup_
 
