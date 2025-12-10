@@ -1,58 +1,13 @@
-# parallel computation of julia fractals ✨
+<img src="./docs/assets/fractal.png" width="100%" />
 
-<img src="./julia-openmp/contrib/input1.png" width="300" height="300" />
+parallel computing of julia fractals.
 
-# openmp benchmark results
+just a bunch of experiments in cuda, openmp and plain python to compare the absolute and relative speedup as well as parallelization efficiency.
 
-openmp has a bunch of nifty abstraction layers to parallelize code. you can reduce, collapse and schedule loops, create tasks and sections, and even use simd instructions. this project benchmarks the performance of different openmp parallelization strategies on a julia fractal computation.
-
-runtimes:
-
-![Minimum runtime vs number of cores for an input size of
-90](./docs/assets/juliap_job_90.png)
-
-![Minimum runtime vs number of cores for an input size of
-1100](./docs/assets/juliap_job_1100.png)
-
-different scheduling strategies:
-
-![Minimum runtime vs schedule option for an input size of 1100 and
-16 cores](./docs/assets/juliap2_job.png)
-
-strong scaling analysis:
-
-![Minimum running time vs number of cores for r=1 and various block
-sizes](./docs/assets/strong_scaling_plot.png)
-
-weak scaling analysis:
-
-![Minimum running time vs number of cores for r=p and various block
-sizes](./docs/assets/weak_scaling_plot.png)
-
-metrics:
-
-_speedup_
-
--   what difference does parallelization make?
--   $S_a(n,p) = \frac{T_{\text{seq}}(n)}{T_{\text{par}}(n,p)}$ = absolute speedup
--   $S_r(n,p) = \frac{T_{\text{par}}(n, 1)}{T_{\text{par}}(n,p)}$ = relative speedup
--   where:
-    -   $n$ = input size
-    -   $p$ = number of processors
-    -   $T_{\text{par}}(n,p)$ = parallel runtime
-    -   $T_{\text{seq}}(n)$ = sequential runtime
-
-_parallelization efficiency_
-
--   what difference does each processor make?
--   $E(n,p) = \frac{T_{\text{seq}}(n)}{p \cdot T_{\text{par}}(n,p)} = \frac{1}{p} \cdot S_a(n,p)$
-
-# system specs
-
-the system used for benchmarking was a hydra node with the following specs:
+all experiments were conducted on the tu wien hydra node with the following specs:
 
 ```plaintext
-bopc23s9@hydra-head:~$ lscpu
+hydra-head:~$ lscpu
 
 Architecture:                    x86_64
 CPU op-mode(s):                  32-bit, 64-bit
@@ -80,4 +35,3 @@ L3 cache:                        22 MiB
 NUMA node0 CPU(s):               0-15
 ...
 ```
-

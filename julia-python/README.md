@@ -1,14 +1,12 @@
-![Julia Set](./assets/out.png)
-
 # julia fractals in python ✨
 
 for benchmarking i used two different seeds i refer to as the "special seed" and the "benchmark seed" to evaluate the performance of our implementation.
 
-![Absolute Runtime vs. Number of Processes](./assets/nprocs-exectime.png)
+![Absolute Runtime vs. Number of Processes](../docs/assets/nprocs-exectime.png)
 
-![Relative Speed-up vs. Number of Processes](./assets/nprocs-speedup.png)
+![Relative Speed-up vs. Number of Processes](../docs/assets/nprocs-speedup.png)
 
-![Parallel Efficiency vs. Number of Processes](./assets/nprocs-parefficiency.png)
+![Parallel Efficiency vs. Number of Processes](../docs/assets/nprocs-parefficiency.png)
 
 i opted for logarithmic scaling on all y-axes in our graphs to enhance the visibility of function shapes/gradients over the marginal differences.
 
