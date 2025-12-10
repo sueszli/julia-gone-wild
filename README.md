@@ -2,9 +2,9 @@
 
 <br />
 
-parallel computing of julia fractals.
+*parallel computing of julia fractals ✨*
 
-just a bunch of experiments in cuda, openmp and plain python to compare the absolute and relative speedup as well as parallelization efficiency.
+experimenting with cuda, openmp and perf optimizations in plain python.
 
 <details>
 <summary>
