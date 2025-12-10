@@ -1,12 +1,18 @@
 <img src="./docs/assets/fractal.png" width="100%" />
 
+<br />
+
 parallel computing of julia fractals.
 
 just a bunch of experiments in cuda, openmp and plain python to compare the absolute and relative speedup as well as parallelization efficiency.
 
+<details>
+<summary>
+system specs
+</summary>
 all experiments were conducted on the tu wien hydra node with the following specs:
 
-```plaintext
+```
 hydra-head:~$ lscpu
 
 Architecture:                    x86_64
@@ -35,3 +41,4 @@ L3 cache:                        22 MiB
 NUMA node0 CPU(s):               0-15
 ...
 ```
+</details>
